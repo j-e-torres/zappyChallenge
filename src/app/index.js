@@ -1,61 +1,116 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Component } from 'react';
 import Papa from 'papaparse';
 
 import Header from './components/Header';
+import BillCalculator from './containers/BillCalculator';
 
-export function App() {
-  const [profile, setProfile] = useState([]);
+/*
+todo:
+  - create react state
+    - loadedProfile data
+    - electricRate
+    - milesDriven
+    - timeCharging
+  - create handleChange to pass down to filters to affect react state
+  -
 
-  useEffect(() => {
-    async function getData() {
-      const response = await fetch('/data/buffaloLoadProfile.csv');
-      const reader = response.body.getReader();
+*/
+export class App extends Component {
+  constructor() {
+    super();
 
-      const result = await reader.read(); // raw array
+    this.state = {
+      electricRate: 'RATE-A',
+      milesDriven: 10000,
+      chargingTime: '6am',
+      zappyProfile: [],
+    };
+  }
 
-      const decoder = new TextDecoder('utf-8');
+  async componentDidMount() {
+    const response = await fetch('/data/buffaloLoadProfile.csv');
+    const reader = response.body.getReader();
 
-      const csv = decoder.decode(result.value); // the csv text
+    const result = await reader.read(); // raw array
 
-      const results = Papa.parse(csv, { header: true }); // object with { data, errors, meta }
-      console.log('results', results);
+    const decoder = new TextDecoder('utf-8');
 
-      const loadedProfile = results.data; // array of objects
-      setProfile(loadedProfile);
-    }
+    const csv = decoder.decode(result.value); // the csv text
 
-    getData();
-  }, []); // [] means just do this once, after initial render
+    const results = Papa.parse(csv, { header: true }); // object with { data, errors, meta }
+    console.log('results', results);
 
-  console.log(profile);
+    const loadedProfile = results.data; // array of objects
 
-  return (
-    <Header />
+    this.setState({ zappyProfile: loadedProfile });
+  }
 
-    // <BillCalculator />
-  );
+  handleChange = ({ target }) => this.setState({ [target.name]: target.value });
+
+  render() {
+    const { electricRate, milesDriven } = this.state;
+
+    return (
+      <>
+        <Header />
+
+        <div className="pageWrapper">
+          <BillCalculator
+            milesDriven={milesDriven}
+            electricRate={electricRate}
+            handleChange={this.handleChange}
+          />
+        </div>
+      </>
+    );
+  }
 }
 
-// import logo from './logo.svg';
-// import './App.css';
+/*
+  useEffect keep re rendering, fetching API constantly
+*/
 
-// function App() {
+// export function Eee() {
+//   const [profile, setProfile] = useState(null);
+//   const [electricRate, setElectricRate] = useState('RATE-A');
+//   const [milesDriven, setMilesDriven] = useState(10000);
+//   const [chargingTime, setChargingTime] = useState('');
+
+//   useEffect(() => {
+//     async function getData() {
+//       const response = await fetch('/data/buffaloLoadProfile.csv');
+//       const reader = response.body.getReader();
+
+//       const result = await reader.read(); // raw array
+
+//       const decoder = new TextDecoder('utf-8');
+
+//       const csv = decoder.decode(result.value); // the csv text
+
+//       const results = Papa.parse(csv, { header: true }); // object with { data, errors, meta }
+//       console.log('results', results);
+
+//       const loadedProfile = results.data; // array of objects
+//       setProfile(loadedProfile);
+//     }
+
+//     getData();
+//   }, []); // [] means just do this once, after initial render
+
+//   console.log(profile);
+
 //   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
+//     <>
+//       <Header />
+
+//       <div className="pageWrapper">
+//         <BillCalculator
+//           setElectricRate={setElectricRate}
+//           setMilesDriven={setMilesDriven}
+//           milesDriven={milesDriven}
+//           electricRate={electricRate}
+//         />
+//       </div>
+//     </>
 //   );
 // }

@@ -1,0 +1,22 @@
+.calculator {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 300;
+    text-align: center;
+  }
+
+  &__filters {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__filterGroup {
+    margin-right: 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+}
