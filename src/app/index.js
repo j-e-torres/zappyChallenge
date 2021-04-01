@@ -1,25 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Papa from 'papaparse';
 
-function App() {
-  const [rows, setRows] = React.useState([]);
-  React.useEffect(() => {
+import Header from './components/Header';
+
+export function App() {
+  const [profile, setProfile] = useState([]);
+
+  useEffect(() => {
     async function getData() {
       const response = await fetch('/data/buffaloLoadProfile.csv');
       const reader = response.body.getReader();
+
       const result = await reader.read(); // raw array
+
       const decoder = new TextDecoder('utf-8');
+
       const csv = decoder.decode(result.value); // the csv text
+
       const results = Papa.parse(csv, { header: true }); // object with { data, errors, meta }
       console.log('results', results);
-      const rows = results.data; // array of objects
-      setRows(rows);
+
+      const loadedProfile = results.data; // array of objects
+      setProfile(loadedProfile);
     }
+
     getData();
   }, []); // [] means just do this once, after initial render
 
-  console.log(rows);
-  return <div className="app">waa</div>;
+  console.log(profile);
+
+  return (
+    <Header />
+
+    // <BillCalculator />
+  );
 }
 
 // import logo from './logo.svg';
@@ -45,5 +59,3 @@ function App() {
 //     </div>
 //   );
 // }
-
-export default App;
