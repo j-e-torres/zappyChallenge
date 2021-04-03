@@ -26,12 +26,12 @@ export const UserFilters = ({ handleChange, milesDriven, electricRate }) => {
           id="milesDriven"
           type="range"
           min="1000"
-          max="25000"
+          max="125000"
           step="500"
           value={milesDriven}
           onChange={handleChange}
         />
-        <span>{milesDriven}</span>
+        <span>{milesDriven} miles</span>
       </div>
 
       <div className="calculator__filterGroup">

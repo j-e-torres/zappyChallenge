@@ -1,3 +1,5 @@
+@import 'src/base.scss';
+
 .calculator {
   display: flex;
   justify-content: center;
@@ -11,12 +13,97 @@
 
   &__filters {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
+    background-color: $color-grey-light-0;
+    padding: 2rem 0;
+    border-radius: 5px;
   }
 
   &__filterGroup {
-    margin-right: 1rem;
+    // margin-right: 5rem;
     display: flex;
     flex-direction: column;
+    color: $color-grey-dark-2;
+
+    & span,
+    select {
+      font-size: 1.125rem;
+    }
+
+    & label {
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
+    }
+
+    & select {
+      padding: 0.25rem 4rem;
+      font-size: 1.125rem;
+      border: 1px solid rgba($color-grey-dark-1, 0.2);
+      border-radius: 5px;
+      outline: none;
+
+      &:focus {
+        border: 1px solid rgba($color-grey-dark-1, 0.5);
+      }
+    }
+  }
+
+  & input {
+    &[type='range'] {
+      -webkit-appearance: none;
+      width: 100%;
+      background: transparent;
+      margin: 1rem 0;
+      border: 1px solid rgba($color-purple-3, 0.5);
+      border-radius: 5px;
+
+      &:focus {
+        outline: none;
+        border: 1px solid $color-purple-1;
+      }
+
+      &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        border: 1px solid $color-purple-1;
+        height: 32px;
+        width: 6px;
+        border-radius: 5px;
+        cursor: pointer;
+        // background-color: rgba($color-purple-3, 0.5);
+        // background-color: $color-purple-3;
+        background-color: #d1d1e0;
+        margin-top: -12px;
+
+        transition: all 0.4s;
+      }
+
+      &:focus {
+        &::-webkit-slider-thumb {
+          background-color: $color-purple-1;
+        }
+      }
+
+      &::-ms-track {
+        width: 100%;
+        cursor: pointer;
+
+        background: transparent;
+        border-color: transparent;
+        color: transparent;
+
+        transition: all 0.4s;
+      }
+
+      &::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 8px;
+        cursor: pointer;
+        background-color: $color-purple-3;
+        background-color: #fff;
+        border-radius: 5px;
+        // border: 0.2px solid #010101;
+        transition: all 0.4s;
+      }
+    }
   }
 }
