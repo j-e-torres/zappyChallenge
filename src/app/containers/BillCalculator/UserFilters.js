@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { RATES_DROPDOWN } from '../../constants';
+import { RATES_DROPDOWN, HOURS } from '../../constants';
 
 export const UserFilters = ({ handleChange, milesDriven, electricRate }) => {
   return (
@@ -36,7 +36,9 @@ export const UserFilters = ({ handleChange, milesDriven, electricRate }) => {
 
       <div className="calculator__filterGroup">
         <label htmlFor="electric-rate">Charging Times</label>
-        <select id="electric-rate">{RATES_DROPDOWN.map((rate) => rate)}</select>
+        <select id="electric-rate">
+          <option value="1">1:00 pm</option>
+        </select>
       </div>
     </div>
   );
