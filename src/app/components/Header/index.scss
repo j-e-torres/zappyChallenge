@@ -1,0 +1,15 @@
+@import 'src/base.scss';
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $color-purple-1;
+  height: 4.5rem;
+
+  &__title {
+    font-size: 2rem;
+    font-weight: 300;
+    color: $color-grey-light-0;
+  }
+}
